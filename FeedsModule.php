@@ -247,6 +247,12 @@ class FeedsModule extends OntoWiki_Module
                 // look for cached feed to avoid unneeded traffic
                 $cacheKey  = 'Zend_Feed_Reader_' . md5($url);
                 $cachedXml = $cache->load($cacheKey);
+            } else {
+                if (defined('_OWDEBUG')) {
+                    $path = $config->cache->path;
+                    OntoWiki::getInstance()->logger->info('feeds Extension: cache dir not writable / existent ('.$path.')');
+                }
+                $cachedXml = false;
             }
 
             if ($cachedXml != false) {
