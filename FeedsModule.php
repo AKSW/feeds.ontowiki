@@ -60,7 +60,7 @@ class FeedsModule extends OntoWiki_Module
 
         // look for configure feed properties
         if (isset($this->_privateConfig->properties)) {
-            $properties = (array) $this->_privateConfig->properties->toArray();
+            $properties = (array) $this->_privateConfig->properties;
 
             // fetch values for every feed property
             foreach ($properties as $key => $property) {
@@ -250,7 +250,9 @@ class FeedsModule extends OntoWiki_Module
             } else {
                 if (defined('_OWDEBUG')) {
                     $path = $config->cache->path;
-                    OntoWiki::getInstance()->logger->info('feeds Extension: cache dir not writable / existent ('.$path.')');
+                    OntoWiki::getInstance()->logger->info(
+                        'feeds Extension: cache dir not writable / existent ('.$path.')'
+                    );
                 }
                 $cachedXml = false;
             }
@@ -280,8 +282,6 @@ class FeedsModule extends OntoWiki_Module
            );
             $this->_entries[$entry->getLink()] = $newEntry;
         }
-
-        return;
     }
 
 
