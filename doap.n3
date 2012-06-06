@@ -13,8 +13,8 @@
   doap:name "Feeds" ;
   doap:description "Aggregate news from feeds which are related to a resource and displays them in a module" ;
   doap:maintainer <http://aksw.org> ;
-  doap:homepage <https://github.com/AKSW/feeds.ontowiki>
-  owconfig:hasModule :Default .
+  doap:homepage <https://github.com/AKSW/feeds.ontowiki> ;
+  owconfig:hasModule :Default ;
   :properties <http://rdfs.org/sioc/ns#feed> ;
   :maxentries "3" ;
   :cachelivetime "86400" ;
