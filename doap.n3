@@ -11,9 +11,11 @@
 :feeds a doap:Project ;
   owconfig:enabled "true"^^xsd:boolean ;
   doap:name "Feeds" ;
+  rdfs:label "Feeds";
   doap:description "Aggregate news from feeds which are related to a resource and displays them in a module" ;
   doap:maintainer <http://aksw.org> ;
   doap:homepage <https://github.com/AKSW/feeds.ontowiki> ;
+  owconfig:privateNamespace <https://raw.github.com/AKSW/feeds.ontowiki/master/doap.n3#> ;
   owconfig:hasModule :Default ;
   :properties <http://rdfs.org/sioc/ns#feed> ;
   :maxentries "3" ;
