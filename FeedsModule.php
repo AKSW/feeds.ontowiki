@@ -198,7 +198,6 @@ class FeedsModule extends OntoWiki_Module
         }
     }
 
-
     /*
      * add a feed url string to the feed array (after check)
      */
@@ -217,45 +216,27 @@ class FeedsModule extends OntoWiki_Module
     private function _loadFeed($url)
     {
         try {
-            // get the ontowiki master config
-            $config = OntoWiki::getInstance()->getConfig();
+            // get the erfurt cache via ontowiki bootstrap
+            $cache	= clone OntoWiki::getInstance()->getCache();
 
             // this uses 304 http codes to speed up retrieval
             Zend_Feed_Reader::useHttpConditionalGet();
 
-            // use the ontowiki cache directory if writeable
-            // http://framework.zend.com/manual/en/zend.feed.reader.html#zend.feed.reader.cache-request.cache
-            if ((isset($config->cache->path)) && (is_writable($config->cache->path))) {
-                // set livetime for cached XML documents
-                if (isset($this->_privateConfig->livetime)) {
-                    $livetime = $this->_privateConfig->livetime;
-                } else {
-                    $livetime = 86400; // default livetime is one day
-                }
-
-                // prepare and assign the cache
-                $cacheFrontendOptions = array(
-                    'lifetime' => $livetime,
-                    'automatic_serialization' => true
-                );
-                $cacheBackendOptions = array('cache_dir' => $config->cache->path);
-                $cache = Zend_Cache::factory(
-                    'Core', 'File', $cacheFrontendOptions, $cacheBackendOptions
-                );
-                Zend_Feed_Reader::setCache($cache);
-
-                // look for cached feed to avoid unneeded traffic
-                $cacheKey  = 'Zend_Feed_Reader_' . md5($url);
-                $cachedXml = $cache->load($cacheKey);
+            // set lifetime for cached XML documents
+            if (isset($this->_privateConfig->cachelifetime)) {
+                $lifetime = (int) $this->_privateConfig->cachelifetime;
             } else {
-                if (defined('_OWDEBUG')) {
-                    $path = $config->cache->path;
-                    OntoWiki::getInstance()->logger->info(
-                        'feeds Extension: cache dir not writable / existent ('.$path.')'
-                    );
-                }
-                $cachedXml = false;
+                $lifetime = 86400; // default lifetime is one day
             }
+            $cache->setLifetime($lifetime);
+
+            // add cache support to feed reader, short version: reuse erfurt cache
+            // http://framework.zend.com/manual/en/zend.feed.reader.html#zend.feed.reader.cache-request.cache
+            Zend_Feed_Reader::setCache($cache);
+
+            // look for cached feed to avoid unneeded traffic
+            $cacheKey  = 'Zend_Feed_Reader_' . md5($url);
+            $cachedXml = $cache->load($cacheKey);
 
             if ($cachedXml != false) {
                 // use the cached XML
