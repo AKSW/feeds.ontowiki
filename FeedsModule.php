@@ -211,7 +211,7 @@ class FeedsModule extends OntoWiki_Module
 
     /*
      * Loads a feed silently into _entries
-     * (uses the OntoWiki cache dir for caching)
+     * (uses clone of OntoWiki cache frontend and sets cache lifetime configured by extension)
      */
     private function _loadFeed($url)
     {
