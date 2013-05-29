@@ -19,7 +19,7 @@
   owconfig:hasModule :Default ;
   :properties <http://rdfs.org/sioc/ns#feed> ;
   :maxentries "3" ;
-  :cachelivetime "86400" ;
+  :cachelifetime "86400" ;
   owconfig:registeredAt <http://extensions.ontowiki.net/repository> ;
   doap:release :v1-0 .
 :Default a owconfig:Module ;
