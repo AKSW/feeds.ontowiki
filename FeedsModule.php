@@ -60,11 +60,11 @@ class FeedsModule extends OntoWiki_Module
 
         // look for configure feed properties
         if (isset($this->_privateConfig->properties)) {
-            $properties = (array) $this->_privateConfig->properties;
+            $properties = (array)$this->_privateConfig->properties;
 
             // fetch values for every feed property
             foreach ($properties as $key => $property) {
-                $subject = (string) $this->_selectedResource;
+                $subject = (string)$this->_selectedResource;
                 $feeds   = $this->_description->getValues($subject, $property);
                 // check values for URL-ness
                 foreach ($feeds as $key => $feedObject) {
@@ -176,10 +176,10 @@ class FeedsModule extends OntoWiki_Module
     {
         if ($this->_owApp->selectedModel && $this->_owApp->selectedResource) {
             $relevants  = is_string($this->_privateConfig->relevant)
-                        ? (array) $this->_privateConfig->relevant
+                        ? (array)$this->_privateConfig->relevant
                         : $this->_privateConfig->relevant->toArray();
             $properties = is_string($this->_privateConfig->properties)
-                        ? (array) $this->_privateConfig->properties
+                        ? (array)$this->_privateConfig->properties
                         : $this->_privateConfig->properties->toArray();
 
             $relevantQuery = "
@@ -224,7 +224,7 @@ class FeedsModule extends OntoWiki_Module
 
             // set lifetime for cached XML documents
             if (isset($this->_privateConfig->cachelifetime)) {
-                $lifetime = (int) $this->_privateConfig->cachelifetime;
+                $lifetime = (int)$this->_privateConfig->cachelifetime;
             } else {
                 $lifetime = 86400; // default lifetime is one day
             }
